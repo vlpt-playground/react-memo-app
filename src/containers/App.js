@@ -12,8 +12,10 @@ import { bindActionCreators } from 'redux';
 
 
 class App extends Component {
-
+    endCursor = 0
     async componentDidMount() {
+        window.addEventListener('scroll', this.handleScroll);
+
         const { MemoActions } = this.props;
         // 초기 메모 로딩
         try {
@@ -21,6 +23,21 @@ class App extends Component {
             this.getRecentMemo();
         } catch(e) {
             console.log(e);
+        }
+    }
+
+    handleScroll = (e) => {
+        const { clientHeight, scrollTop } = document.body;
+        const { innerHeight } = window;
+
+        if(clientHeight - innerHeight - scrollTop < 100) {
+            const { endCursor, MemoActions } = this.props;
+
+            // endCursor 가 없거나, 이전에 했던 요청과 동일하다면 여기서 멈춘다.
+            if(!endCursor || this.endCursor === endCursor) return;
+            this.endCursor = endCursor;
+
+            MemoActions.getPreviousMemo(endCursor);
         }
     }
 
@@ -50,8 +67,9 @@ class App extends Component {
 
 export default connect(
     (state) => ({
-        cursor: state.memo.getIn(['data', 0, 'id'])
-    }), // 현재는 비어있는 객체를 반환합니다
+        cursor: state.memo.getIn(['data', 0, 'id']),
+        endCursor: state.memo.getIn(['data', state.memo.get('data').size - 1, 'id'])
+    }), 
     (dispatch) => ({
         MemoActions: bindActionCreators(memoActions, dispatch)
     })

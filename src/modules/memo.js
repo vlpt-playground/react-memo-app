@@ -9,6 +9,7 @@ const GET_INITIAL_MEMO = 'memo/GET_INITIAL_MEMO';
 const GET_RECENT_MEMO = 'memo/GET_RECENT_MEMO';
 const UPDATE_MEMO = 'memo/UPDATE_MEMO';
 const DELETE_MEMO = 'memo/DELETE_MEMO';
+const GET_PREVIOUS_MEMO = 'memo/GET_PREVIOUS_MEMO';
 
 // 액션 생성자
 export const createMemo = createAction(CREATE_MEMO, WebAPI.createMemo) // { title, body }
@@ -19,6 +20,7 @@ export const getRecentMemo = createAction(GET_RECENT_MEMO, WebAPI.getRecentMemo)
 export const updateMemo = createAction(UPDATE_MEMO, WebAPI.updateMemo, payload => payload); // { id, memo: {title,body} }
 export const deleteMemo = createAction(DELETE_MEMO, WebAPI.deleteMemo, payload => payload); // id
 
+export const getPreviousMemo = createAction(GET_PREVIOUS_MEMO, WebAPI.getPreviousMemo); // endCursor
 
 
 
@@ -59,6 +61,15 @@ export default handleActions({
             const id = action.meta;
             const index = state.get('data').findIndex(memo => memo.get('id') === id);
             return state.deleteIn(['data', index]);
+        }
+    }),
+    // 이전 메모 로딩
+    ...pender({
+        type: GET_PREVIOUS_MEMO,
+        onSuccess: (state, action) => {
+            // 데이터 리스트의 뒷부분에 새 데이터를 붙여준다
+            const data = state.get('data');
+            return state.set('data', data.concat(fromJS(action.payload.data)))
         }
     })
 }, initialState);
