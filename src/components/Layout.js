@@ -18,7 +18,6 @@ Layout.Main = styled.div`
     width: 1200px;
     transition: all .3s;
     position: relative;
-    background: gray;
 
     ${media.desktop`
         width: 990px;
