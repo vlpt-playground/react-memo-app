@@ -76,6 +76,10 @@ class Memo extends Component {
         onOpen(memo);
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextProps.memo !== this.props.memo;
+    }
+    
     render() {
         const { title, body } = this.props.memo.toJS();
         const { handleClick } = this;

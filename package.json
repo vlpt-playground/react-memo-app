@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "immutable": "^3.8.1",
+    "json-server": "^0.10.1",
     "open-color": "^1.5.1",
     "react": "^15.6.1",
     "react-click-outside": "^2.3.1",
@@ -24,10 +25,12 @@
     "react-scripts": "1.0.7"
   },
   "scripts": {
-    "start": "cross-env NODE_PATH=src react-scripts start",
-    "build": "react-scripts build",
+    "start": "node server",
+    "start:dev": "cross-env NODE_PATH=src react-scripts start",
+    "build": "cross-env NODE_PATH=src react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "cross-env NODE_PATH=src npm run build"
   },
   "proxy": "http://localhost:3001"
 }
