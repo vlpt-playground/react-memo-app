@@ -34,13 +34,15 @@ class WriteMemo extends Component {
     }
 
     handleCreate = async () => {
-        const { title, body, MemoActions, UIActions } = this.props;
+        const { title, body, cursor, MemoActions, UIActions } = this.props;
         try {
             // 메모 생성 API 호출
             await MemoActions.createMemo({
                 title, body
             });
-
+            // 신규 메모를 불러옵니다
+            // cursor 가 존재하지 않는다면, 0을 cursor 로 설정합니다.
+            await MemoActions.getRecentMemo(cursor ? cursor : 0);
             UIActions.resetInput();
             // TODO: 최근 메모 불러오기
 
@@ -48,6 +50,8 @@ class WriteMemo extends Component {
             console.log(e); // 에러 발생
         }
     }
+
+
 
     render() {
         const { handleFocus, handleChange, handleCreate } = this;
@@ -72,7 +76,8 @@ export default connect(
     (state) => ({
         focused: state.ui.getIn(['write', 'focused']),
         title: state.ui.getIn(['write', 'title']),
-        body: state.ui.getIn(['write', 'body'])
+        body: state.ui.getIn(['write', 'body']),
+        cursor: state.memo.getIn(['data', 0, 'id'])
     }),
     (dispatch) => ({
         UIActions: bindActionCreators(uiActions, dispatch),
