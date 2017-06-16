@@ -1,0 +1,33 @@
+{
+  "name": "memo-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.16.2",
+    "immutable": "^3.8.1",
+    "open-color": "^1.5.1",
+    "react": "^15.6.1",
+    "react-click-outside": "^2.3.1",
+    "react-dom": "^15.6.1",
+    "react-icons": "^2.2.5",
+    "react-immutable-proptypes": "^2.1.0",
+    "react-redux": "^5.0.5",
+    "react-textarea-autosize": "^5.0.6",
+    "react-transition-group": "^1.2.0",
+    "redux": "^3.6.0",
+    "redux-actions": "^2.0.3",
+    "redux-pender": "^1.0.23",
+    "styled-components": "^2.1.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.0.1",
+    "react-scripts": "1.0.7"
+  },
+  "scripts": {
+    "start": "cross-env NODE_PATH=src react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:3001"
+}
