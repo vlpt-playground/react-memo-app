@@ -27,10 +27,9 @@ class App extends Component {
     }
 
     handleScroll = (e) => {
-        const { clientHeight, scrollTop } = document.documentElement;
+        const { scrollHeight, scrollTop } = document.documentElement;
         const { innerHeight } = window;
-
-        if(clientHeight - innerHeight - scrollTop < 100) {
+        if(scrollHeight - innerHeight - scrollTop < 100) {
             const { endCursor, MemoActions } = this.props;
 
             // endCursor 가 없거나, 이전에 했던 요청과 동일하다면 여기서 멈춘다.
