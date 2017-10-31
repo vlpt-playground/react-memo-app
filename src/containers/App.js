@@ -27,7 +27,7 @@ class App extends Component {
     }
 
     handleScroll = (e) => {
-        const { clientHeight, scrollTop } = document.body;
+        const { clientHeight, scrollTop } = document.documentElement;
         const { innerHeight } = window;
 
         if(clientHeight - innerHeight - scrollTop < 100) {
